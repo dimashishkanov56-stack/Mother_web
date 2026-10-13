@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Яндекс.Мама — С Днём Рождения!</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --ya-red: #FC3F1D;
+            --ya-red-hover: #E53616;
+            --ya-black: #21201F;
+            --ya-gray: #999999;
+            --ya-light-gray: #F5F4F2;
+            --ya-border: #EBEBEB;
+            --ya-yellow: #FFCC00;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #FFFFFF;
+            color: var(--ya-black);
+            overflow-x: hidden;
+            line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Падающие сердечки */
+        .heart {
+            position: fixed;
+            top: -10vh;
+            font-size: 24px;
+            pointer-events: none;
+            z-index: 9999;
+            animation: fall linear forwards;
+        }
+
+        @keyframes fall {
+            to { transform: translateY(110vh) rotate(360deg); opacity: 0; }
+        }
+
+        /* Шапка в стиле Яндекса */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--ya-border);
+            z-index: 100;
+            padding: 16px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            font-weight: 700;
+            font-size: 20px;
+            letter-spacing: -0.5px;
+        }
+
+        .logo .ya { color: var(--ya-red); }
+
+        .header-date {
+            color: var(--ya-gray);
+            font-size: 14px;
+        }
+
+        /* Секции */
+        section {
+            min-height: 100vh;
+            padding: 120px 24px 80px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* HERO — в стиле главной Яндекса */
+        .hero {
+            background: #FFFFFF;
+            text-align: center;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            background: var(--ya-light-gray);
+            color: var(--ya-black);
+            padding: 8px 16px;
+            border-radius: 100px;
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 32px;
+            animation: fadeIn 1s ease-out;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 7vw, 5rem);
+            font-weight: 800;
+            letter-spacing: -2px;
+            line-height: 1.05;
+            margin-bottom: 24px;
+            animation: fadeInUp 1s ease-out 0.2s both;
+        }
+
+        .hero h1 .accent { color: var(--ya-red); }
+
+        /* Поисковая строка Яндекса */
+        .search-bar {
+            max-width: 600px;
+            width: 100%;
+            margin: 32px auto;
+            background: var(--ya-light-gray);
+            border-radius: 24px;
+            padding: 20px 28px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            animation: fadeInUp 1s ease-out 0.4s both;
+            transition: all 0.3s ease;
+        }
+
+        .search-bar:hover { background: #EDECEA; }
+
+        .search-icon {
+            width: 24px;
+            height: 24px;
+            color: var(--ya-red);
+            flex-shrink: 0;
+        }
+
+        .search-text {
+            flex: 1;
+            font-size: 17px;
+            color: var(--ya-black);
+            text-align: left;
+        }
+
+        .search-text .cursor {
+            display: inline-block;
+            width: 2px;
+            height: 18px;
+            background: var(--ya-red);
+            margin-left: 2px;
+            vertical-align: middle;
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink { 50% { opacity: 0; } }
+
+        .hero-subtitle {
+            font-size: 18px;
+            color: var(--ya-gray);
+            max-width: 500px;
+            margin: 0 auto;
+            animation: fadeInUp 1s ease-out 0.6s both;
+        }
+
+        /* Секция "Сервисы мамы" */
+        .services {
+            background: var(--ya-light-gray);
+        }
+
+        .section-title {
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 700;
+            letter-spacing: -1px;
+            margin-bottom: 16px;
+            text-align: center;
+        }
+
+        .section-subtitle {
+            color: var(--ya-gray);
+            font-size: 17px;
+            margin-bottom: 48px;
+            text-align: center;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 16px;
+            max-width: 1000px;
+            width: 100%;
+        }
+
+        .service-card {
+            background: #FFFFFF;
+            border-radius: 20px;
+            padding: 28px;
+            transition: all 0.3s ease;
+            cursor: default;
+            border: 1px solid transparent;
+        }
+
+        .service-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+        }
+
+        .service-icon {
+            width: 48px;
+            height: 48px;
+            background: var(--ya-red);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        .service-name {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            letter-spacing: -0.3px;
+        }
+
+        .service-desc {
+            color: var(--ya-gray);
+            font-size: 15px;
+            line-height: 1.5;
+        }
+
+        .service-rating {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin-top: 16px;
+            font-size: 14px;
+            color: var(--ya-black);
+            font-weight: 500;
+        }
+
+        .stars { color: var(--ya-yellow); letter-spacing: 2px; }
+
+        /* Письмо */
+        .letter-section {
+            background: #FFFFFF;
+        }
+
+        .letter-card {
+            max-width: 700px;
+            width: 100%;
+            background: var(--ya-light-gray);
+            border-radius: 24px;
+            padding: 48px;
+            font-size: 17px;
+            line-height: 1.7;
+        }
+
+        .letter-card p { margin-bottom: 20px; }
+
+        .letter-card p:last-of-type { margin-bottom: 0; }
+
+        .letter-signature {
+            margin-top: 32px;
+            padding-top: 24px;
+            border-top: 1px solid var(--ya-border);
+            font-weight: 600;
+            color: var(--ya-red);
+        }
+
+        /* Галерея */
+        .gallery-section { background: var(--ya-light-gray); }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 16px;
+            max-width: 1000px;
+            width: 100%;
+        }
+
+        .gallery-grid img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .gallery-grid img:hover {
+            transform: scale(1.02);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+
+        /* Сюрприз */
+        .surprise-section {
+            background: #FFFFFF;
+        }
+
+        .magic-btn {
+            background: var(--ya-red);
+            color: #FFFFFF;
+            border: none;
+            padding: 18px 40px;
+            font-size: 17px;
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            border-radius: 100px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            letter-spacing: -0.2px;
+        }
+
+        .magic-btn:hover {
+            background: var(--ya-red-hover);
+            transform: scale(1.03);
+        }
+
+        .magic-btn:active { transform: scale(0.98); }
+
+        .hidden-msg {
+            margin-top: 32px;
+            font-size: clamp(1.5rem, 4vw, 2rem);
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            opacity: 0;
+            transition: opacity 0.8s ease;
+            text-align: center;
+            max-width: 600px;
+        }
+
+        .hidden-msg.show { opacity: 1; }
+        .hidden-msg .accent { color: var(--ya-red); }
+
+        /* Футер */
+        footer {
+            background: var(--ya-black);
+            color: #FFFFFF;
+            padding: 40px 24px;
+            text-align: center;
+        }
+
+        footer .logo { margin-bottom: 12px; }
+        footer p { color: var(--ya-gray); font-size: 14px; }
+
+        /* Анимации */
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+        @media (max-width: 600px) {
+            section { padding: 100px 20px 60px; }
+            .letter-card { padding: 28px; font-size: 16px; }
+            .gallery-grid img { height: 220px; }
+            .header-date { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ШАПКА В СТИЛЕ ЯНДЕКСА -->
+    <header class="header">
+        <div class="logo"><span class="ya">Я</span>ндекс.Мама</div>
+        <div class="header-date">14 октября 2026, вторник</div>
+    </header>
+
+    <!-- HERO -->
+    <section class="hero">
+        <div class="hero-badge">🎂 Сегодня праздник</div>
+        <h1>С Днём Рождения,<br><span class="accent">Мамочка!</span></h1>
+
+        <div class="search-bar">
+            <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <circle cx="11" cy="11" r="8"/>
+                <path d="m21 21-4.3-4.3"/>
+            </svg>
+            <div class="search-text">
+                лучшая мама на свете<span class="cursor"></span>
+            </div>
+        </div>
+
+        <p class="hero-subtitle">Найдено 1 000 000 000 результатов. И все — про тебя.</p>
+    </section>
+
+    <!-- СЕРВИСЫ МАМЫ -->
+    <section class="services">
+        <h2 class="section-title">Твои суперспособности</h2>
+        <p class="section-subtitle">Работают 24/7, без выходных и перерывов на обед</p>
+
+        <div class="services-grid">
+            <div class="service-card">
+                <div class="service-icon">🍲</div>
+                <div class="service-name">Яндекс.Вкусно</div>
+                <div class="service-desc">Готовишь так, что даже доставка стыдится. Твой борщ — главный конкурент любого ресторана.</div>
+                <div class="service-rating"><span class="stars">★★★★★</span> 5.0</div>
+            </div>
+
+            <div class="service-card">
+                <div class="service-icon">💬</div>
+                <div class="service-name">Яндекс.Поддержка</div>
+                <div class="service-desc">Отвечаешь на любые вопросы в любое время суток. Время ожидания — 0 секунд.</div>
+                <div class="service-rating"><span class="stars">★★★★★</span> 5.0</div>
+            </div>
+
+            <div class="service-card">
+                <div class="service-icon">🛡️</div>
+                <div class="service-name">Яндекс.Защита</div>
+                <div class="service-desc">Обнимешь — и все проблемы исчезают. Лучший антивирус от грусти и тревоги.</div>
+                <div class="service-rating"><span class="stars">★★★★★</span> 5.0</div>
+            </div>
+
+            <div class="service-card">
+                <div class="service-icon">🗺️</div>
+                <div class="service-name">Яндекс.Навигатор</div>
+                <div class="service-desc">Всегда подскажешь правильный путь в жизни. Ни один GPS не сравнится с твоей мудростью.</div>
+                <div class="service-rating"><span class="stars">★★★★★</span> 5.0</div>
+            </div>
+
+            <div class="service-card">
+                <div class="service-icon">🎵</div>
+                <div class="service-name">Яндекс.Колыбельная</div>
+                <div class="service-desc">Твой голос — самый любимый плейлист. Слушаю его уже много лет и не могу наслушаться.</div>
+                <div class="service-rating"><span class="stars">★★★★★</span> 5.0</div>
+            </div>
+
+            <div class="service-card">
+                <div class="service-icon">☀️</div>
+                <div class="service-name">Яндекс.Погода</div>
+                <div class="service-desc">С тобой в доме всегда солнечно, даже когда за октомбрьский дождь. Ты — моё личное солнце.</div>
+                <div class="service-rating"><span class="stars">★★★★★</span> 5.0</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ПИСЬМО -->
+    <section class="letter-section">
+        <h2 class="section-title">Письмо от меня</h2>
+        <p class="section-subtitle">Без алгоритмов, только от сердца</p>
+
+        <div class="letter-card">
+            <p>Мамуль, привет!</p>
+            <p>Я знаю, что ты каждый день делаешь Яндекс лучше. А я хочу напомнить тебе, что ты делаешь лучше весь мой мир — просто тем, что ты есть.</p>
+            <p>Спасибо за твою бесконечную любовь, за поддержку в любых моих "стартапах" (даже самых безумных), за то, что веришь в меня сильнее, чем я сам(а). Ты — мой главный алгоритм счастья.</p>
+            <p>Я желаю тебе здоровья, энергии, классных проектов и побольше выходных. Пусть каждый день приносит радость, а в работе — только приятные задачи.</p>
+            <p>Я очень тебя люблю ❤️</p>
+            <div class="letter-signature">С любовью, Дмитрий</div>
+        </div>
+    </section>
+
+    <!-- ГАЛЕРЕЯ -->
+    <section class="gallery-section">
+        <h2 class="section-title">Наши моменты</h2>
+        <p class="section-subtitle">Самые ценные снимки в архиве</p>
+
+        <div class="gallery-grid">
+            <img src="C:\Users\dimas\OneDrive\Desktop\Подарок маме\Мама1.jpg" alt="Фото 1">
+            <img src="C:\Users\dimas\OneDrive\Desktop\Подарок маме\Мама2.jpg" alt="Фото 2">
+        </div>
+    </section>
+
+    <!-- СЮРПРИЗ -->
+    <section class="surprise-section">
+        <h2 class="section-title">А ещё...</h2>
+        <p class="section-subtitle">Нажми на кнопку — будет красиво</p>
+        <button class="magic-btn" onclick="makeItRain()">Запустить салют 🎉</button>
+        <div class="hidden-msg" id="secretMsg">
+            Ты — <span class="accent">лучшая</span> мама на свете ❤️
+        </div>
+    </section>
+
+    <!-- ФУТЕР -->
+    <footer>
+        <div class="logo"><span class="ya" style="color: var(--ya-red);">Я</span>ндекс.Мама</div>
+        <p>Сделано с любовью · 2026</p>
+    </footer>
+
+    <script>
+        function makeItRain() {
+            const msg = document.getElementById('secretMsg');
+            msg.classList.add('show');
+
+            const emojis = ['❤️', '🎉', '✨', '🎂', '🌟', '💖'];
+
+            for (let i = 0; i < 60; i++) {
+                setTimeout(() => {
+                    const heart = document.createElement('div');
+                    heart.classList.add('heart');
+                    heart.innerHTML = emojis[Math.floor(Math.random() * emojis.length)];
+                    heart.style.left = Math.random() * 100 + 'vw';
+                    heart.style.fontSize = (Math.random() * 20 + 18) + 'px';
+                    heart.style.animationDuration = (Math.random() * 3 + 2) + 's';
+                    document.body.appendChild(heart);
+                    setTimeout(() => heart.remove(), 5000);
+                }, i * 80);
+            }
+        }
+    </script>
+</body>
+</html>
